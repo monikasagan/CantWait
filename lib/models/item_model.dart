@@ -1,9 +1,8 @@
-
 class ItemModel {
-  ItemModel({
+  ItemModel(
+    this.ended, {
     required this.title,
     required this.imageURL,
-    required this.ended,
     required this.likes,
     required this.releaseDate,
   });
@@ -14,5 +13,3 @@ class ItemModel {
   final double likes;
   final DateTime releaseDate;
 }
-
-
