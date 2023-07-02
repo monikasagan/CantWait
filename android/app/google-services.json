@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "605392276534",
+    "project_id": "gansa-workapp",
+    "storage_bucket": "gansa-workapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:605392276534:android:7dfbb91218de60b92edc97",
+        "android_client_info": {
+          "package_name": "com.msagan.gansa"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "605392276534-rmcssghb39ogn18086clofcda3r8329j.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAQT9ihofemlNgO8k4vRXxXeHFWs07yvuM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "605392276534-rmcssghb39ogn18086clofcda3r8329j.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>605392276534-f4co366bf2lhu4jk82fc4pp3p7ja4onm.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.605392276534-f4co366bf2lhu4jk82fc4pp3p7ja4onm</string>
+	<key>API_KEY</key>
+	<string>AIzaSyAl3gdTEEtC7ZrKavTaUye49lyFY3JQe6I</string>
+	<key>GCM_SENDER_ID</key>
+	<string>605392276534</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.msagan.gansa</string>
+	<key>PROJECT_ID</key>
+	<string>gansa-workapp</string>
+	<key>STORAGE_BUCKET</key>
+	<string>gansa-workapp.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:605392276534:ios:68bca9a58eedd0f02edc97</string>
+</dict>
+</plist>
