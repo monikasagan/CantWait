@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+<<<<<<< HEAD
 import 'package:gansa/app/core/enums.dart';
 import 'package:gansa/presentation/pages/auth/auth_page/cubit/auth_cubit.dart';
 import 'package:gansa/presentation/pages/auth/login/login_page.dart';
@@ -45,3 +46,8 @@ class _AuthPageState extends State<AuthPage> {
     );
   }
 }
+=======
+
+
+
+>>>>>>> d6ab9619efb94bd21bb0660f39b291283a18905a

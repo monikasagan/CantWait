@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+<<<<<<< HEAD
+=======
 import 'package:gansa/presentation/pages/auth/login/login_page.dart';
+>>>>>>> d6ab9619efb94bd21bb0660f39b291283a18905a
 import 'firebase_options.dart';
 import 'presentation/pages/auth/auth_page/auth_page.dart';
 
