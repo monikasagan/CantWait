@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gansa/components/button.dart';
 import 'package:gansa/components/text_field_login_page.dart';
 
 class LoginPage extends StatefulWidget {
@@ -68,7 +69,10 @@ class _LoginPageState extends State<LoginPage> {
               const SizedBox(
                 height: 25,
               ),
-              //Button(),
+              Button(
+                onTap: () {},
+                buttonTitle: 'Sign in',
+              ),
               const SizedBox(
                 height: 20,
               ),
