@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:gansa/presentation/pages/auth/login/login_page.dart';
 import 'package:gansa/presentation/pages/auth/register/register_page.dart';
 
-class RootPage extends StatefulWidget {
-  const RootPage({super.key});
+class LoginOrRegisterPage extends StatefulWidget {
+  const LoginOrRegisterPage({super.key});
 
   @override
-  State<RootPage> createState() => _LoginOrRegisterPageState();
+  State<LoginOrRegisterPage> createState() => _LoginOrRegisterPageState();
 }
 
-class _LoginOrRegisterPageState extends State<RootPage> {
+class _LoginOrRegisterPageState extends State<LoginOrRegisterPage> {
   bool showLoginPage = true;
 
   void tooglePages() {

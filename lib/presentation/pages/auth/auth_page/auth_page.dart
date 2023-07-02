@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gansa/app/core/enums.dart';
 import 'package:gansa/presentation/pages/auth/auth_page/cubit/auth_cubit.dart';
 import 'package:gansa/presentation/pages/auth/login/login_page.dart';
+import 'package:gansa/presentation/pages/main/home_page/home_page.dart';
 
 class AuthPage extends StatefulWidget {
   @override
@@ -14,14 +15,16 @@ class _AuthPageState extends State<AuthPage> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => AuthCubit(),
+      create: (context) => AuthCubit()..start(),
       child: BlocConsumer<AuthCubit, AuthState>(
         listener: (context, state) {
           if (state.status == Status.error) {
             final errorMessage = state.errorMessage;
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
-                content: Text(errorMessage),
+                content: Text(
+                  errorMessage.toString(),
+                ),
                 backgroundColor: Colors.red,
               ),
             );
@@ -33,9 +36,9 @@ class _AuthPageState extends State<AuthPage> {
         builder: (context, state) {
           final user = state.user;
           if (user == null) {
-            return LoginPage();
+            return const LoginPage();
           } else {
-            return const Scaffold();
+            return HomePage(user: user);
           }
         },
       ),
