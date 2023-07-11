@@ -1,52 +1,40 @@
 import 'dart:async';
 
-import 'package:bloc/bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:gansa/app/core/enums.dart';
-import 'package:gansa/presentation/pages/auth/register/register_page.dart';
 
 part 'auth_state.dart';
 
 class AuthCubit extends Cubit<AuthState> {
   AuthCubit()
       : super(
-          AuthState(
-            status: Status.initial,
-            emailController: TextEditingController(),
-            passwordController: TextEditingController(),
-            errorMessage: '',
-          ),
+          const AuthState(),
         );
+
+  StreamSubscription<User?>? _authStateChangesSubscription;
 
   Future<void> start() async {
     emit(
-      AuthState(
-        emailController: TextEditingController(),
-        passwordController: TextEditingController(),
-        status: Status.loading,
-        errorMessage: '',
-      ),
+      const AuthState(),
     );
-
-  }
-
-  Future<void> signIn({required String email, required String password}) async {
-    emit(
-      AuthState(
-        emailController: TextEditingController(),
-        passwordController: TextEditingController(),
-        errorMessage: '',
-        status: Status.loading,
-      ),
-    );
-    await FirebaseAuth.instance.signInWithEmailAndPassword(
-      email: email,
-      password: password,
-    );
-  }
-
-  Future<void> signOut() async {
-    FirebaseAuth.instance.signOut();
+    _authStateChangesSubscription =
+        FirebaseAuth.instance.authStateChanges().listen((user) {
+      emit(
+        AuthState(
+          user: user,
+          status: Status.succes,
+        ),
+      );
+    })
+          ..onError((error) {
+            emit(
+              AuthState(
+                status: Status.error,
+                errorMessage: error.toString(),
+              ),
+            );
+          });
   }
 }

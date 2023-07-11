@@ -1,14 +1,13 @@
-part of 'auth_cubit.dart';
+part of 'login_cubit.dart';
 
-@immutable
-class AuthState {
+class LoginState {
   final User? user;
   final Status status;
   final String? errorMessage;
 
-  const AuthState({
+  LoginState({
     this.user,
-     this.status=Status.initial,
     this.errorMessage,
+    this.status = Status.initial,
   });
 }

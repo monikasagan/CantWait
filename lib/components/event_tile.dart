@@ -1,13 +1,10 @@
-import 'dart:ui';
 
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class EventTile extends StatelessWidget {
   const EventTile({
     super.key,
   });
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -20,10 +17,8 @@ class EventTile extends StatelessWidget {
               height: 170,
               decoration: const BoxDecoration(
                 color: Colors.black12,
-                image: DecorationImage(
-                    image: NetworkImage(
-                        "https://images.volleyballworld.com/image/private/t_q-best/fivb-prd/trjkxs6crohhnif688ol.jpg"),
-                    fit: BoxFit.cover),
+                image:
+                    DecorationImage(image: NetworkImage(''), fit: BoxFit.cover),
               ),
             ),
             Row(
@@ -36,7 +31,7 @@ class EventTile extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: const [
                         Text(
-                          'VNL season START',
+                          'title',
                           style: TextStyle(
                             fontSize: 20.0,
                             fontWeight: FontWeight.bold,
@@ -58,10 +53,11 @@ class EventTile extends StatelessWidget {
                   ),
                   child: Center(
                     child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: const [
                         Text(
-                          '47',
-                          style: TextStyle(color: Colors.black, fontSize: 50),
+                          'datetime',
+                          style: TextStyle(color: Colors.black, fontSize: 45),
                         ),
                         Text(
                           'days left',

@@ -19,27 +19,72 @@ class _AuthPageState extends State<AuthPage> {
       child: BlocConsumer<AuthCubit, AuthState>(
         listener: (context, state) {
           if (state.status == Status.error) {
-            final errorMessage = state.errorMessage;
+            final errorMessage = state.errorMessage ?? 'Unkown error';
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
-                content: Text(
-                  errorMessage.toString(),
-                ),
-                backgroundColor: Colors.red,
+                content: Text(errorMessage),
+                backgroundColor: Colors.purple,
               ),
             );
-          }
-          if (state.status == Status.loading) {
-            const CircularProgressIndicator();
           }
         },
         builder: (context, state) {
           final user = state.user;
+          if (state.status == Status.loading) {
+            const Scaffold(
+              body: Center(
+                child: CircularProgressIndicator(
+                  color: Colors.indigo,
+                  backgroundColor: Color.fromARGB(255, 43, 54, 114),
+                ),
+              ),
+            );
+          }
+          if (state.status == Status.initial) {
+            const Scaffold(
+              body: Center(
+                child: CircularProgressIndicator(
+                  color: Colors.orange,
+                  backgroundColor: Color.fromARGB(255, 43, 54, 114),
+                ),
+              ),
+            );
+          }
+
           if (user == null) {
             return const LoginPage();
-          } else {
-            return HomePage(user: user);
           }
+          return const HomePage();
+
+          // switch (state.status) {
+          //   case Status.initial:
+          //     return const Center(
+          //       child: Text('Initialization..'),
+          //     );
+
+          //   case Status.error:
+          //     return Scaffold(
+          //       body: Center(
+          //         child: Text(
+          //           state.errorMessage.toString(),
+          //         ),
+          //       ),
+          //     );
+          //   case Status.loading:
+          //     return const Scaffold(
+          //       body: Center(
+          //         child: CircularProgressIndicator(
+          //           color: Colors.indigo,
+          //           backgroundColor: Color.fromARGB(255, 43, 54, 114),
+          //         ),
+          //       ),
+          //     );
+          //   case Status.succes:
+          //     if (user == null) {
+          //       return const LoginPage();
+          //     }
+          //     return const HomePage();
+          // }
         },
       ),
     );
