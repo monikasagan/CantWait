@@ -54,7 +54,7 @@ class _AuthPageState extends State<AuthPage> {
           if (user == null) {
             return const LoginPage();
           }
-          return const HomePage();
+          return HomePage();
 
           // switch (state.status) {
           //   case Status.initial:

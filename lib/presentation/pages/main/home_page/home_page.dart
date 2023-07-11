@@ -1,15 +1,20 @@
 import 'dart:ui';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gansa/app/core/enums.dart';
 import 'package:gansa/presentation/pages/auth/login/cubit/login_cubit.dart';
+import 'package:gansa/presentation/pages/main/add/add_page.dart';
 import 'package:gansa/presentation/pages/main/home_page/cubit/home_cubit.dart';
 
 class HomePage extends StatelessWidget {
-  const HomePage({
+  HomePage({
     super.key,
   });
+
+  final titleController = TextEditingController();
+  final imageController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +54,9 @@ class HomePage extends StatelessWidget {
           }
           if (state.status == Status.initial) {
             const Scaffold(
-              body: Center(child: Text('Initialization..')),
+              body: Center(
+                child: Text('Initialization..'),
+              ),
             );
           }
           final user = state.user;
@@ -72,20 +79,60 @@ class HomePage extends StatelessWidget {
               title: const Text('GanSA'),
               actions: [
                 InkWell(
-                  onTap: () async {
-                    context.read<LoginCubit>().signOut();
-                  },
+                  onTap: () {},
                   child: const Icon(Icons.logout_outlined),
                 )
               ],
             ),
+            floatingActionButton: FloatingActionButton(
+              backgroundColor: Colors.grey,
+              child: const Icon(Icons.add),
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (_) => AddPage(),
+                  ),
+                );
+              },
+            ),
             body: Center(
-                child: ListView(
-              children: [
-                const EventTile(title: '', imageURL: ''),
-                Center(child: Text('logged as: ${user?.email}'))
-              ],
-            )),
+              child: StreamBuilder<QuerySnapshot>(
+                stream:
+                    FirebaseFirestore.instance.collection('events').snapshots(),
+                builder: (context, snapshot) {
+                  if (snapshot.hasError) {
+                    return const Text('Error');
+                  }
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const CircularProgressIndicator(
+                      color: Colors.indigo,
+                      backgroundColor: Color.fromARGB(255, 101, 117, 211),
+                    );
+                  }
+                  final documents = snapshot.data!.docs;
+
+                  return ListView(
+                    children: [
+                      for (final document in documents) ...[
+                        Dismissible(
+                          key: ValueKey(document.id),
+                          onDismissed: (_) {
+                            FirebaseFirestore.instance
+                                .collection('events')
+                                .doc(document.id)
+                                .delete();
+                          },
+                          child: EventTile(
+                            title: document['title'],
+                            imageURL: document['image_URL'],
+                          ),
+                        ),
+                      ],
+                    ],
+                  );
+                },
+              ),
+            ),
           );
         },
       ),
@@ -102,6 +149,7 @@ class EventTile extends StatelessWidget {
 
   final String title;
   final String imageURL;
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -112,12 +160,10 @@ class EventTile extends StatelessWidget {
           children: [
             Container(
               height: 170,
-              decoration: const BoxDecoration(
+              decoration: BoxDecoration(
                 color: Colors.black12,
                 image: DecorationImage(
-                    image:
-                        NetworkImage('https://satkurier.pl/uploads/108053.jpg'),
-                    fit: BoxFit.cover),
+                    image: NetworkImage(imageURL), fit: BoxFit.cover),
               ),
             ),
             Row(
@@ -128,10 +174,10 @@ class EventTile extends StatelessWidget {
                     padding: const EdgeInsets.all(10),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: const [
+                      children: [
                         Text(
-                          'title',
-                          style: TextStyle(
+                          title,
+                          style: const TextStyle(
                             fontSize: 20.0,
                             fontWeight: FontWeight.bold,
                           ),
