@@ -18,4 +18,11 @@ class HomeCubit extends Cubit<HomeState> {
       ),
     );
   }
+
+  Future<void> signOut() async {
+    await FirebaseAuth.instance.signOut();
+    emit(
+      HomeState(user: null),
+    );
+  }
 }
