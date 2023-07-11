@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gansa/components/button.dart';
-import 'package:gansa/components/text_field_login_page.dart';
+import 'package:gansa/components/my_text_field.dart';
 import 'package:gansa/presentation/pages/auth/auth_page/cubit/auth_cubit.dart';
 import 'package:gansa/presentation/pages/auth/login/login_page.dart';
 
@@ -48,7 +48,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       const SizedBox(
                         height: 20,
                       ),
-                      TextFieldLoginPage(
+                      MyTextField(
                         controller: emailController,
                         hintText: 'Email',
                         obscureText: false,
@@ -56,7 +56,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       const SizedBox(
                         height: 20,
                       ),
-                      TextFieldLoginPage(
+                      MyTextField(
                         controller: passwordController,
                         hintText: 'Password',
                         obscureText: true,
@@ -64,7 +64,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       const SizedBox(
                         height: 20,
                       ),
-                      TextFieldLoginPage(
+                      MyTextField(
                         controller: confirmPasswordController,
                         hintText: 'Confirm your password',
                         obscureText: true,

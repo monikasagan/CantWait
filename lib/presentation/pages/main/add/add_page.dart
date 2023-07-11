@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:gansa/components/my_text_field.dart';
 
 class AddPage extends StatefulWidget {
   @override
@@ -34,47 +35,20 @@ class _AddPageState extends State<AddPage> {
           vertical: 20,
         ),
         children: [
-          AddEventTextField(
+          MyTextField(
+            obscureText: false,
             controller: titleController,
             hintText: 'Title',
           ),
           const SizedBox(
             height: 20,
           ),
-          AddEventTextField(
+          MyTextField(
+            obscureText: false,
             controller: imageController,
             hintText: 'image URL',
           )
         ],
-      ),
-    );
-  }
-}
-
-class AddEventTextField extends StatelessWidget {
-  const AddEventTextField(
-      {super.key, required this.controller, required this.hintText});
-
-  final TextEditingController controller;
-  final String hintText;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 25.0),
-      child: TextField(
-        controller: controller,
-        decoration: InputDecoration(
-          hintText: hintText,
-          enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.grey.shade800),
-          ),
-          focusedBorder: const OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.white),
-          ),
-          fillColor: Colors.grey.shade800,
-          filled: true,
-        ),
       ),
     );
   }
