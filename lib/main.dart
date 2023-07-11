@@ -2,8 +2,10 @@
 
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:gansa/presentation/pages/auth/auth_page/auth_page.dart';
+import 'package:gansa/presentation/pages/main/add/add_page.dart';
+import 'package:gansa/presentation/pages/main/home_page/home_page.dart';
 import 'firebase_options.dart';
-import 'presentation/pages/auth/auth_page/auth_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
