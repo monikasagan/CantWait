@@ -1,9 +1,10 @@
 class ItemModel {
-  ItemModel(
-      { required this.title,
-       required this.imageURL,
-       required this.releaseDate,
-       required this.id});
+  ItemModel({
+    required this.id,
+    required this.title,
+    required this.imageURL,
+    required this.releaseDate,
+  });
 
   final String id;
   final String title;

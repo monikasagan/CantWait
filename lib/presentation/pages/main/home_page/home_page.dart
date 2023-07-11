@@ -1,11 +1,10 @@
 import 'dart:ui';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gansa/app/core/enums.dart';
-import 'package:gansa/presentation/pages/auth/login/cubit/login_cubit.dart';
+import 'package:gansa/models/item_model.dart';
 import 'package:gansa/presentation/pages/main/add/add_page.dart';
 import 'package:gansa/presentation/pages/main/home_page/cubit/home_cubit.dart';
 
@@ -34,6 +33,7 @@ class HomePage extends StatelessWidget {
           }
         },
         builder: (context, state) {
+          final itemModels = state.items;
           if (state.status == Status.loading) {
             const Scaffold(
               body: Center(
@@ -90,41 +90,23 @@ class HomePage extends StatelessWidget {
               },
             ),
             body: Center(
-              child: StreamBuilder<QuerySnapshot>(
-                stream:
-                    FirebaseFirestore.instance.collection('events').snapshots(),
-                builder: (context, snapshot) {
-                  if (snapshot.hasError) {
-                    return const Text('Error');
-                  }
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const CircularProgressIndicator(
-                      color: Colors.indigo,
-                      backgroundColor: Color.fromARGB(255, 101, 117, 211),
-                    );
-                  }
-                  final documents = snapshot.data!.docs;
-
-                  return ListView(
-                    children: [
-                      for (final document in documents) ...[
-                        Dismissible(
-                          key: ValueKey(document.id),
-                          onDismissed: (_) {
-                            FirebaseFirestore.instance
-                                .collection('events')
-                                .doc(document.id)
-                                .delete();
-                          },
-                          child: EventTile(
-                            title: document['title'],
-                            imageURL: document['image_URL'],
-                          ),
-                        ),
-                      ],
-                    ],
-                  );
-                },
+              child: ListView(
+                children: [
+                  for (final itemModel in itemModels) ...[
+                    Dismissible(
+                      key: ValueKey(itemModel.id),
+                      onDismissed: (_) {
+                        FirebaseFirestore.instance
+                            .collection('events')
+                            .doc(itemModel.id)
+                            .delete();
+                      },
+                      child: EventTile(
+                        itemModel: itemModel,
+                      ),
+                    ),
+                  ],
+                ],
               ),
             ),
           );
@@ -137,12 +119,10 @@ class HomePage extends StatelessWidget {
 class EventTile extends StatelessWidget {
   const EventTile({
     super.key,
-    required this.title,
-    required this.imageURL,
+    required this.itemModel,
   });
 
-  final String title;
-  final String imageURL;
+  final ItemModel itemModel;
 
   @override
   Widget build(BuildContext context) {
@@ -157,7 +137,7 @@ class EventTile extends StatelessWidget {
               decoration: BoxDecoration(
                 color: Colors.black12,
                 image: DecorationImage(
-                    image: NetworkImage(imageURL), fit: BoxFit.cover),
+                    image: NetworkImage(itemModel.imageURL), fit: BoxFit.cover),
               ),
             ),
             Row(
@@ -170,7 +150,7 @@ class EventTile extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         Text(
-                          title,
+                          itemModel.title,
                           style: const TextStyle(
                             fontSize: 20.0,
                             fontWeight: FontWeight.bold,
@@ -193,9 +173,10 @@ class EventTile extends StatelessWidget {
                   child: Center(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: const [
+                      children: [
                         Text(
-                          '',
+                          itemModel.releaseDate.toString(),
+                      
                           style: TextStyle(color: Colors.black, fontSize: 15),
                         ),
                         Text(
