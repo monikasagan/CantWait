@@ -28,6 +28,10 @@ class LoginCubit extends Cubit<LoginState> {
         email: email,
         password: password,
       );
+      LoginState(
+        status: Status.succes,
+        user: state.user,
+      );
     } catch (error) {
       emit(
         LoginState(
@@ -35,14 +39,11 @@ class LoginCubit extends Cubit<LoginState> {
           errorMessage: error.toString(),
         ),
       );
-      LoginState(
-        status: Status.succes,
-        user: state.user,
-      );
     }
   }
 
-  Future<void> signOut() async {
+  
+Future<void> signOut() async {
     await FirebaseAuth.instance.signOut();
   }
 }

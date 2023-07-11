@@ -4,12 +4,12 @@ class HomeState {
   HomeState({
     this.errorMessage,
     this.status = Status.initial,
-    this.documents,
+    this.items = const [],
     this.user,
   });
 
   final String? errorMessage;
   final Status status;
-  final QueryDocumentSnapshot<Map<String, dynamic>>? documents;
+  final List<ItemModel> items;
   final User? user;
 }

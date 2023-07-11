@@ -1,15 +1,20 @@
 import 'dart:ui';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gansa/app/core/enums.dart';
-import 'package:gansa/presentation/pages/auth/login/cubit/login_cubit.dart';
+import 'package:gansa/models/item_model.dart';
+import 'package:gansa/presentation/pages/main/add/add_page.dart';
 import 'package:gansa/presentation/pages/main/home_page/cubit/home_cubit.dart';
 
 class HomePage extends StatelessWidget {
-  const HomePage({
+  HomePage({
     super.key,
   });
+
+  final titleController = TextEditingController();
+  final imageController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -22,12 +27,13 @@ class HomePage extends StatelessWidget {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 content: Text(errorMessage),
-                backgroundColor: Colors.pink,
+                backgroundColor: Colors.redAccent,
               ),
             );
           }
         },
         builder: (context, state) {
+          final itemModels = state.items;
           if (state.status == Status.loading) {
             const Scaffold(
               body: Center(
@@ -38,18 +44,11 @@ class HomePage extends StatelessWidget {
               ),
             );
           }
-          if (state.status == Status.error) {
-            const Scaffold(
-              body: Center(
-                child: CircularProgressIndicator(
-                  color: Colors.red,
-                ),
-              ),
-            );
-          }
           if (state.status == Status.initial) {
             const Scaffold(
-              body: Center(child: Text('Initialization..')),
+              body: Center(
+                child: Text('Initialization..'),
+              ),
             );
           }
           final user = state.user;
@@ -72,20 +71,44 @@ class HomePage extends StatelessWidget {
               title: const Text('GanSA'),
               actions: [
                 InkWell(
-                  onTap: () async {
-                    context.read<LoginCubit>().signOut();
+                  onTap: () {
+                    context.read<HomeCubit>().signOut();
                   },
                   child: const Icon(Icons.logout_outlined),
                 )
               ],
             ),
+            floatingActionButton: FloatingActionButton(
+              backgroundColor: Colors.grey,
+              child: const Icon(Icons.add),
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (_) => AddPage(),
+                  ),
+                );
+              },
+            ),
             body: Center(
-                child: ListView(
-              children: [
-                const EventTile(title: '', imageURL: ''),
-                Center(child: Text('logged as: ${user?.email}'))
-              ],
-            )),
+              child: ListView(
+                children: [
+                  for (final itemModel in itemModels) ...[
+                    Dismissible(
+                      key: ValueKey(itemModel.id),
+                      onDismissed: (_) {
+                        FirebaseFirestore.instance
+                            .collection('events')
+                            .doc(itemModel.id)
+                            .delete();
+                      },
+                      child: EventTile(
+                        itemModel: itemModel,
+                      ),
+                    ),
+                  ],
+                ],
+              ),
+            ),
           );
         },
       ),
@@ -96,12 +119,11 @@ class HomePage extends StatelessWidget {
 class EventTile extends StatelessWidget {
   const EventTile({
     super.key,
-    required this.title,
-    required this.imageURL,
+    required this.itemModel,
   });
 
-  final String title;
-  final String imageURL;
+  final ItemModel itemModel;
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -112,12 +134,10 @@ class EventTile extends StatelessWidget {
           children: [
             Container(
               height: 170,
-              decoration: const BoxDecoration(
+              decoration: BoxDecoration(
                 color: Colors.black12,
                 image: DecorationImage(
-                    image:
-                        NetworkImage('https://satkurier.pl/uploads/108053.jpg'),
-                    fit: BoxFit.cover),
+                    image: NetworkImage(itemModel.imageURL), fit: BoxFit.cover),
               ),
             ),
             Row(
@@ -128,10 +148,10 @@ class EventTile extends StatelessWidget {
                     padding: const EdgeInsets.all(10),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: const [
+                      children: [
                         Text(
-                          'title',
-                          style: TextStyle(
+                          itemModel.title,
+                          style: const TextStyle(
                             fontSize: 20.0,
                             fontWeight: FontWeight.bold,
                           ),
@@ -153,9 +173,10 @@ class EventTile extends StatelessWidget {
                   child: Center(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: const [
+                      children: [
                         Text(
-                          '',
+                          itemModel.releaseDate.toString(),
+                      
                           style: TextStyle(color: Colors.black, fontSize: 15),
                         ),
                         Text(

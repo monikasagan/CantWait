@@ -23,7 +23,7 @@ class _AuthPageState extends State<AuthPage> {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 content: Text(errorMessage),
-                backgroundColor: Colors.purple,
+                backgroundColor: Colors.red,
               ),
             );
           }
@@ -54,37 +54,7 @@ class _AuthPageState extends State<AuthPage> {
           if (user == null) {
             return const LoginPage();
           }
-          return const HomePage();
-
-          // switch (state.status) {
-          //   case Status.initial:
-          //     return const Center(
-          //       child: Text('Initialization..'),
-          //     );
-
-          //   case Status.error:
-          //     return Scaffold(
-          //       body: Center(
-          //         child: Text(
-          //           state.errorMessage.toString(),
-          //         ),
-          //       ),
-          //     );
-          //   case Status.loading:
-          //     return const Scaffold(
-          //       body: Center(
-          //         child: CircularProgressIndicator(
-          //           color: Colors.indigo,
-          //           backgroundColor: Color.fromARGB(255, 43, 54, 114),
-          //         ),
-          //       ),
-          //     );
-          //   case Status.succes:
-          //     if (user == null) {
-          //       return const LoginPage();
-          //     }
-          //     return const HomePage();
-          // }
+          return HomePage();
         },
       ),
     );
