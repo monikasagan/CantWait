@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gansa/app/core/enums.dart';
@@ -27,7 +28,7 @@ class HomePage extends StatelessWidget {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 content: Text(errorMessage),
-                backgroundColor: Colors.pink,
+                backgroundColor: Colors.redAccent,
               ),
             );
           }
@@ -39,15 +40,6 @@ class HomePage extends StatelessWidget {
                 child: CircularProgressIndicator(
                   color: Colors.indigo,
                   backgroundColor: Color.fromARGB(255, 43, 54, 114),
-                ),
-              ),
-            );
-          }
-          if (state.status == Status.error) {
-            const Scaffold(
-              body: Center(
-                child: CircularProgressIndicator(
-                  color: Colors.red,
                 ),
               ),
             );
@@ -79,7 +71,9 @@ class HomePage extends StatelessWidget {
               title: const Text('GanSA'),
               actions: [
                 InkWell(
-                  onTap: () {},
+                  onTap: () {
+                    context.read<HomeCubit>().signOut();
+                  },
                   child: const Icon(Icons.logout_outlined),
                 )
               ],
