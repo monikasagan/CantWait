@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gansa/app/core/enums.dart';
-import 'package:gansa/presentation/pages/auth/auth_page/cubit/auth_cubit.dart';
-import 'package:gansa/presentation/pages/auth/login/login_page.dart';
-import 'package:gansa/presentation/pages/main/home_page/home_page.dart';
+import 'package:gansa/features/pages/auth/auth_page/cubit/auth_cubit.dart';
+import 'package:gansa/features/pages/auth/login/login_page.dart';
+import 'package:gansa/features/pages/main/home_page/home_page.dart';
+
 
 class AuthPage extends StatefulWidget {
   @override

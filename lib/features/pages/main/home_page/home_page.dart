@@ -1,12 +1,11 @@
 import 'dart:ui';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gansa/app/core/enums.dart';
+import 'package:gansa/features/pages/main/add/add_page.dart';
+import 'package:gansa/features/pages/main/home_page/cubit/home_cubit.dart';
 import 'package:gansa/models/item_model.dart';
-import 'package:gansa/presentation/pages/main/add/add_page.dart';
-import 'package:gansa/presentation/pages/main/home_page/cubit/home_cubit.dart';
 import 'package:gansa/repositories/items_repository.dart';
 
 class HomePage extends StatelessWidget {

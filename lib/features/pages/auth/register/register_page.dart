@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gansa/components/button.dart';
 import 'package:gansa/components/my_text_field.dart';
-import 'package:gansa/presentation/pages/auth/auth_page/cubit/auth_cubit.dart';
-import 'package:gansa/presentation/pages/auth/login/login_page.dart';
+import 'package:gansa/features/pages/auth/auth_page/cubit/auth_cubit.dart';
+import 'package:gansa/features/pages/auth/login/login_page.dart';
 
 class RegisterPage extends StatefulWidget {
   final Function()? onTap;

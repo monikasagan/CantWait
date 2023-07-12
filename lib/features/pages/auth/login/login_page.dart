@@ -3,8 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gansa/app/core/enums.dart';
 import 'package:gansa/components/button.dart';
 import 'package:gansa/components/my_text_field.dart';
-import 'package:gansa/presentation/pages/auth/register/register_page.dart';
-import 'package:gansa/presentation/pages/main/home_page/home_page.dart';
+import 'package:gansa/features/pages/auth/register/register_page.dart';
+import 'package:gansa/features/pages/main/home_page/home_page.dart';
 
 import 'cubit/login_cubit.dart';
 

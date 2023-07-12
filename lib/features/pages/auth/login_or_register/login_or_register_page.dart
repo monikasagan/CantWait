@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:gansa/presentation/pages/auth/login/login_page.dart';
-import 'package:gansa/presentation/pages/auth/register/register_page.dart';
+import 'package:gansa/features/pages/auth/login/login_page.dart';
+import 'package:gansa/features/pages/auth/register/register_page.dart';
 
 class LoginOrRegisterPage extends StatefulWidget {
   const LoginOrRegisterPage({super.key});

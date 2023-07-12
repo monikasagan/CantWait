@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gansa/components/my_text_field.dart';
-import 'package:gansa/presentation/pages/main/add/cubit/add_cubit.dart';
-
+import 'package:gansa/features/pages/main/add/cubit/add_cubit.dart';
 class AddPage extends StatefulWidget {
   @override
   State<AddPage> createState() => _AddPageState();

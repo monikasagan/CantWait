@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:gansa/presentation/pages/auth/auth_page/auth_page.dart';
-import 'package:gansa/presentation/pages/main/test_pages/test_page.dart';
+import 'package:gansa/features/pages/auth/auth_page/auth_page.dart';
 import 'firebase_options.dart';
 
 void main() async {
