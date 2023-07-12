@@ -93,7 +93,9 @@ class HomePage extends StatelessWidget {
                     Dismissible(
                       key: ValueKey(itemModel.id),
                       onDismissed: (_) {
-                        context.read<HomeCubit>().delete(id: itemModel.id);
+                        context
+                            .read<HomeCubit>()
+                            .delete(documentID: itemModel.id);
                       },
                       child: EventTile(
                         itemModel: itemModel,

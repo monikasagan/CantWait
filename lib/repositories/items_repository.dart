@@ -19,4 +19,22 @@ class ItemsRepository {
       ).toList();
     });
   }
+
+  Future<void> delete({required String id}) {
+    return FirebaseFirestore.instance.collection('events').doc(id).delete();
+  }
+
+  Future<void> add(
+    String title,
+    String imageURL,
+    DateTime releaseDate,
+  ) async {
+    await FirebaseFirestore.instance.collection('events').add(
+      {
+        'title': title,
+        'image_URL': imageURL,
+        'release_date': releaseDate,
+      },
+    );
+  }
 }
