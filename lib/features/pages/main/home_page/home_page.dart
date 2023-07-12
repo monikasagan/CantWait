@@ -13,9 +13,6 @@ class HomePage extends StatelessWidget {
     super.key,
   });
 
-  final titleController = TextEditingController();
-  final imageController = TextEditingController();
-
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -84,6 +81,7 @@ class HomePage extends StatelessWidget {
                 Navigator.of(context).push(
                   MaterialPageRoute(
                     builder: (_) => const AddPage(),
+                    fullscreenDialog: true,
                   ),
                 );
               },
@@ -133,7 +131,9 @@ class EventTile extends StatelessWidget {
               decoration: BoxDecoration(
                 color: Colors.black12,
                 image: DecorationImage(
-                    image: NetworkImage(itemModel.imageURL), fit: BoxFit.cover),
+                  image: NetworkImage(itemModel.imageURL),
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
             Row(

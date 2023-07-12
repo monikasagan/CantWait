@@ -6,11 +6,14 @@ part 'add_state.dart';
 class AddCubit extends Cubit<AddState> {
   AddCubit() : super(AddState());
 
-  Future<void> add(String title, String imageURL) async {
+  
+
+  Future<void> add(String title, String imageURL, DateTime releaseDate) async {
     try {
       await FirebaseFirestore.instance.collection('events').add({
         'title': title,
         'image_URL': imageURL,
+        'release_date': releaseDate,
       });
       emit(
         AddState(saved: true),
@@ -23,5 +26,4 @@ class AddCubit extends Cubit<AddState> {
       );
     }
   }
-
 }

@@ -1,16 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:gansa/components/my_text_field.dart';
 import 'package:gansa/features/pages/main/add/cubit/add_cubit.dart';
+import 'package:intl/intl.dart';
+
 class AddPage extends StatefulWidget {
+  const AddPage({
+    super.key,
+  });
   @override
   State<AddPage> createState() => _AddPageState();
-  const AddPage({super.key});
 }
 
 class _AddPageState extends State<AddPage> {
-  final titleController = TextEditingController();
-  final imageController = TextEditingController();
+  String? _imageURL;
+  String? _title;
+  DateTime? _releaseDate;
 
   @override
   Widget build(BuildContext context) {
@@ -21,6 +25,9 @@ class _AddPageState extends State<AddPage> {
           if (state.saved == true) {
             Navigator.of(context).pop();
           }
+          if (state.errorMessage!.isNotEmpty) {
+            print(state.errorMessage);
+          }
         },
         builder: (context, state) {
           return Scaffold(
@@ -29,38 +36,104 @@ class _AddPageState extends State<AddPage> {
               actions: [
                 IconButton(
                   onPressed: () async {
-                    await context
-                        .read<AddCubit>()
-                        .add(titleController.text, imageController.text);
+                    await context.read<AddCubit>().add(
+                          _title!,
+                          _imageURL!,
+                          _releaseDate!,
+                        );
                   },
                   icon: const Icon(Icons.check),
                 ),
               ],
             ),
-            body: ListView(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 30,
-                vertical: 20,
-              ),
-              children: [
-                MyTextField(
-                  obscureText: false,
-                  controller: titleController,
-                  hintText: 'Title',
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                MyTextField(
-                  obscureText: false,
-                  controller: imageController,
-                  hintText: 'image URL',
-                )
-              ],
+            body: _AddPageBody(
+              onTitleChanged: (newValue) {
+                setState(() {
+                  _title = newValue;
+                });
+              },
+              onImageUrlChanged: (newValue) {
+                setState(() {
+                  _imageURL = newValue;
+                });
+              },
+              onDateChanged: (newValue) {
+                setState(() {
+                  _releaseDate = newValue;
+                });
+              },
+              selectedDateFormatted: _releaseDate == null
+                  ? null
+                  : DateFormat.yMMMMEEEEd().format(_releaseDate!),
             ),
           );
         },
       ),
+    );
+  }
+}
+
+class _AddPageBody extends StatelessWidget {
+  const _AddPageBody({
+    super.key,
+    required this.onTitleChanged,
+    required this.onImageUrlChanged,
+    required this.onDateChanged,
+    this.selectedDateFormatted,
+  });
+
+  final Function(String) onTitleChanged;
+  final Function(String) onImageUrlChanged;
+  final Function(DateTime?) onDateChanged;
+  final String? selectedDateFormatted;
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView(
+      padding: const EdgeInsets.symmetric(
+        horizontal: 30,
+        vertical: 20,
+      ),
+      children: [
+        TextField(
+          onChanged: onTitleChanged,
+          decoration: const InputDecoration(
+            border: OutlineInputBorder(),
+            hintText: "Matrix",
+            label: Text('Title'),
+          ),
+        ),
+        const SizedBox(
+          height: 20,
+        ),
+        TextField(
+          onChanged: onImageUrlChanged,
+          decoration: const InputDecoration(
+            border: OutlineInputBorder(),
+            hintText: "http?? ... .jpg",
+            label: Text('image_url'),
+          ),
+        ),
+        const SizedBox(
+          height: 25,
+        ),
+        ElevatedButton(
+          onPressed: () async {
+            final selectedDate = await showDatePicker(
+              context: context,
+              initialDate: DateTime.now(),
+              firstDate: DateTime.now(),
+              lastDate: DateTime.now().add(
+                const Duration(
+                  days: 365 * 10,
+                ),
+              ),
+            );
+            onDateChanged(selectedDate);
+          },
+          child: Text(selectedDateFormatted ?? 'Choose release date'),
+        )
+      ],
     );
   }
 }
