@@ -51,7 +51,6 @@ class HomePage extends StatelessWidget {
               ),
             );
           }
-          final user = state.user;
           return Scaffold(
             appBar: AppBar(
               flexibleSpace: ClipRect(
@@ -84,7 +83,7 @@ class HomePage extends StatelessWidget {
               onPressed: () {
                 Navigator.of(context).push(
                   MaterialPageRoute(
-                    builder: (_) => AddPage(),
+                    builder: (_) => const AddPage(),
                   ),
                 );
               },
@@ -156,9 +155,9 @@ class EventTile extends StatelessWidget {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        SizedBox(height: 10),
+                        const SizedBox(height: 10),
                         Text(
-                          '22.11.2023',
+                          itemModel.releaseDate.toString(),
                         ),
                       ],
                     ),
@@ -174,12 +173,11 @@ class EventTile extends StatelessWidget {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text(
-                          itemModel.releaseDate.toString(),
-                      
-                          style: TextStyle(color: Colors.black, fontSize: 15),
+                        Text(itemModel.daysLeft(),
+                          style: const TextStyle(
+                              color: Colors.black, fontSize: 15),
                         ),
-                        Text(
+                        const Text(
                           'days left',
                           style: TextStyle(color: Colors.black, fontSize: 15),
                         ),

@@ -27,9 +27,20 @@ class HomeCubit extends Cubit<HomeState> {
         );
       }).toList();
       emit(
-        HomeState(items: itemModels),
+        HomeState(
+          status: Status.succes,
+          items: itemModels,
+        ),
       );
-    });
+    })
+      ..onError((error) {
+        emit(
+          HomeState(
+            status: Status.error,
+            errorMessage: error.toString(),
+          ),
+        );
+      });
   }
 
   Future<void> signOut() async {
