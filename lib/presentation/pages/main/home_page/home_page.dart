@@ -7,6 +7,7 @@ import 'package:gansa/app/core/enums.dart';
 import 'package:gansa/models/item_model.dart';
 import 'package:gansa/presentation/pages/main/add/add_page.dart';
 import 'package:gansa/presentation/pages/main/home_page/cubit/home_cubit.dart';
+import 'package:gansa/repositories/items_repository.dart';
 
 class HomePage extends StatelessWidget {
   HomePage({
@@ -19,7 +20,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => HomeCubit()..start(),
+      create: (context) => HomeCubit(ItemsRepository())..start(),
       child: BlocConsumer<HomeCubit, HomeState>(
         listener: (context, state) {
           if (state.status == Status.error) {
@@ -51,7 +52,6 @@ class HomePage extends StatelessWidget {
               ),
             );
           }
-          final user = state.user;
           return Scaffold(
             appBar: AppBar(
               flexibleSpace: ClipRect(
@@ -84,7 +84,7 @@ class HomePage extends StatelessWidget {
               onPressed: () {
                 Navigator.of(context).push(
                   MaterialPageRoute(
-                    builder: (_) => AddPage(),
+                    builder: (_) => const AddPage(),
                   ),
                 );
               },
@@ -96,10 +96,7 @@ class HomePage extends StatelessWidget {
                     Dismissible(
                       key: ValueKey(itemModel.id),
                       onDismissed: (_) {
-                        FirebaseFirestore.instance
-                            .collection('events')
-                            .doc(itemModel.id)
-                            .delete();
+                        context.read<HomeCubit>().delete(id: itemModel.id);
                       },
                       child: EventTile(
                         itemModel: itemModel,
@@ -156,9 +153,9 @@ class EventTile extends StatelessWidget {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        SizedBox(height: 10),
+                        const SizedBox(height: 10),
                         Text(
-                          '22.11.2023',
+                          itemModel.releaseDate.toString(),
                         ),
                       ],
                     ),
@@ -175,11 +172,11 @@ class EventTile extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          itemModel.releaseDate.toString(),
-                      
-                          style: TextStyle(color: Colors.black, fontSize: 15),
+                          itemModel.daysLeft(),
+                          style: const TextStyle(
+                              color: Colors.black, fontSize: 15),
                         ),
-                        Text(
+                        const Text(
                           'days left',
                           style: TextStyle(color: Colors.black, fontSize: 15),
                         ),

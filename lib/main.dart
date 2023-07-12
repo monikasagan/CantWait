@@ -1,10 +1,7 @@
-// ignore_for_file: prefer_const_constructors
-
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:gansa/presentation/pages/auth/auth_page/auth_page.dart';
-import 'package:gansa/presentation/pages/main/add/add_page.dart';
-import 'package:gansa/presentation/pages/main/home_page/home_page.dart';
+import 'package:gansa/presentation/pages/main/test_pages/test_page.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -23,7 +20,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData.dark(),
-      home: AuthPage(),
+      home: const AuthPage(),
     );
   }
 }

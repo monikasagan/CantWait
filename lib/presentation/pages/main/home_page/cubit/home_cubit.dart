@@ -5,31 +5,47 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:gansa/app/core/enums.dart';
 import 'package:gansa/models/item_model.dart';
+import 'package:gansa/repositories/items_repository.dart';
 
 part 'home_state.dart';
 
 class HomeCubit extends Cubit<HomeState> {
-  HomeCubit() : super(HomeState());
+  HomeCubit(this._itemsRepository) : super(HomeState());
 
   StreamSubscription? _streamSubscription;
 
+  final ItemsRepository _itemsRepository;
+
   Future<void> start() async {
-    _streamSubscription = FirebaseFirestore.instance
-        .collection('events')
-        .snapshots()
-        .listen((items) {
-      final itemModels = items.docs.map((doc) {
-        return ItemModel(
-          id: doc.id,
-          title: doc['title'],
-          imageURL: doc['image_URL'],
-          releaseDate: (doc['release_date'] as Timestamp).toDate(),
-        );
-      }).toList();
+    _streamSubscription = _itemsRepository.getItemsStream().listen((items) {
       emit(
-        HomeState(items: itemModels),
+        HomeState(
+          status: Status.succes,
+          items: items,
+        ),
       );
-    });
+    })
+      ..onError((error) {
+        emit(
+          HomeState(
+            status: Status.error,
+            errorMessage: error.toString(),
+          ),
+        );
+      });
+  }
+
+  Future<void> delete({required String id}) async {
+    try {
+      FirebaseFirestore.instance.collection('events').doc(id).delete();
+    } catch (error) {
+      emit(
+        HomeState(
+          status: Status.error,
+          errorMessage: error.toString(),
+        ),
+      );
+    }
   }
 
   Future<void> signOut() async {
