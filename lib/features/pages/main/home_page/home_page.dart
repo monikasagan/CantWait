@@ -92,6 +92,19 @@ class HomePage extends StatelessWidget {
                   for (final itemModel in itemModels) ...[
                     Dismissible(
                       key: ValueKey(itemModel.id),
+                      background: const DecoratedBox(
+                        decoration: BoxDecoration(color: Colors.indigo),
+                        child: Align(
+                          alignment: Alignment.centerRight,
+                          child: Padding(
+                            padding: EdgeInsets.only(right: 32.0),
+                            child: Icon(Icons.delete),
+                          ),
+                        ),
+                      ),
+                      confirmDismiss: (direction) async {
+                        return direction == DismissDirection.endToStart;
+                      },
                       onDismissed: (_) {
                         context
                             .read<HomeCubit>()
