@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gansa/app/core/enums.dart';
 import 'package:gansa/features/pages/main/add/cubit/add_cubit.dart';
 import 'package:gansa/repositories/items_repository.dart';
 import 'package:intl/intl.dart';
@@ -23,11 +24,16 @@ class _AddPageState extends State<AddPage> {
       create: (context) => AddCubit(ItemsRepository()),
       child: BlocConsumer<AddCubit, AddState>(
         listener: (context, state) {
-          if (state.saved == true) {
+          if (state.status == Status.succes) {
             Navigator.of(context).pop();
           }
-          if (state.errorMessage!.isNotEmpty) {
-            print(state.errorMessage);
+          if (state.status == Status.error) {
+            final errorMessage = state.errorMessage ?? 'Unknown error';
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(errorMessage),
+              ),
+            );
           }
         },
         builder: (context, state) {
@@ -36,13 +42,17 @@ class _AddPageState extends State<AddPage> {
               title: const Text('Add new upcoming title'),
               actions: [
                 IconButton(
-                  onPressed: () async {
-                    await context.read<AddCubit>().add(
-                          _title!,
-                          _imageURL!,
-                          _releaseDate!,
-                        );
-                  },
+                  onPressed: _title == null ||
+                          _imageURL == null ||
+                          _releaseDate == null
+                      ? null
+                      : () {
+                          context.read<AddCubit>().add(
+                                _title!,
+                                _imageURL!,
+                                _releaseDate!,
+                              );
+                        },
                   icon: const Icon(Icons.check),
                 ),
               ],

@@ -2,10 +2,10 @@ part of 'add_cubit.dart';
 
 class AddState {
   AddState({
-    this.saved = false,
     this.errorMessage,
+    this.status = Status.initial,
   });
 
-  final bool saved;
   final String? errorMessage;
+  final Status status;
 }

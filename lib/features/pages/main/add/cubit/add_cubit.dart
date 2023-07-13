@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:gansa/app/core/enums.dart';
 import 'package:gansa/repositories/items_repository.dart';
 
 part 'add_state.dart';
@@ -16,11 +17,17 @@ class AddCubit extends Cubit<AddState> {
     try {
       await _itemsRepository.add(title, imageURL, releaseDate);
       emit(
-        AddState(saved: true),
+        AddState(status: Status.loading),
+      );
+      emit(
+        AddState(
+          status: Status.succes,
+        ),
       );
     } catch (error) {
       emit(
         AddState(
+          status: Status.error,
           errorMessage: error.toString(),
         ),
       );
