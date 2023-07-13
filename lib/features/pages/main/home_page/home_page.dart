@@ -125,12 +125,16 @@ class EventTile extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
       child: Container(
-        decoration: const BoxDecoration(color: Colors.black12),
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(20), color: Colors.black12),
         child: Column(
           children: [
             Container(
               height: 170,
               decoration: BoxDecoration(
+                borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(20),
+                    topRight: Radius.circular(20)),
                 color: Colors.black12,
                 image: DecorationImage(
                   image: NetworkImage(itemModel.imageURL),
