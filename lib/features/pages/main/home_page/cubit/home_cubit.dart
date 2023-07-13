@@ -53,4 +53,10 @@ class HomeCubit extends Cubit<HomeState> {
       HomeState(user: null),
     );
   }
+
+  @override
+  Future<void> close() {
+    _streamSubscription?.cancel();
+    return super.close();
+  }
 }

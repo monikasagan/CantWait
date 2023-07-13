@@ -37,4 +37,10 @@ class AuthCubit extends Cubit<AuthState> {
             );
           });
   }
+
+  @override
+  Future<void> close() {
+    _authStateChangesSubscription?.cancel();
+    return super.close();
+  }
 }
