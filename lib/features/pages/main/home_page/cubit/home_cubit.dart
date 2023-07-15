@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:gansa/app/core/enums.dart';
 import 'package:gansa/models/item_model.dart';
@@ -35,9 +34,9 @@ class HomeCubit extends Cubit<HomeState> {
       });
   }
 
-  Future<void> delete({required String id}) async {
+  Future<void> delete({required String documentID}) async {
     try {
-      FirebaseFirestore.instance.collection('events').doc(id).delete();
+      await _itemsRepository.delete(id: documentID);
     } catch (error) {
       emit(
         HomeState(
@@ -53,5 +52,11 @@ class HomeCubit extends Cubit<HomeState> {
     emit(
       HomeState(user: null),
     );
+  }
+
+  @override
+  Future<void> close() {
+    _streamSubscription?.cancel();
+    return super.close();
   }
 }

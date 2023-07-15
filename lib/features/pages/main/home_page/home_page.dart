@@ -16,7 +16,9 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => HomeCubit(ItemsRepository())..start(),
+      create: (context) => HomeCubit(
+        ItemsRepository(),
+      )..start(),
       child: BlocConsumer<HomeCubit, HomeState>(
         listener: (context, state) {
           if (state.status == Status.error) {
@@ -64,7 +66,7 @@ class HomePage extends StatelessWidget {
               backgroundColor: Colors.transparent,
               centerTitle: true,
               leading: const Icon(Icons.tsunami),
-              title: const Text('GanSA'),
+              title: const Text('Can\'t wait '),
               actions: [
                 InkWell(
                   onTap: () {
@@ -92,8 +94,23 @@ class HomePage extends StatelessWidget {
                   for (final itemModel in itemModels) ...[
                     Dismissible(
                       key: ValueKey(itemModel.id),
+                      background: const DecoratedBox(
+                        decoration: BoxDecoration(color: Colors.indigo),
+                        child: Align(
+                          alignment: Alignment.centerRight,
+                          child: Padding(
+                            padding: EdgeInsets.only(right: 32.0),
+                            child: Icon(Icons.delete),
+                          ),
+                        ),
+                      ),
+                      confirmDismiss: (direction) async {
+                        return direction == DismissDirection.endToStart;
+                      },
                       onDismissed: (_) {
-                        context.read<HomeCubit>().delete(id: itemModel.id);
+                        context
+                            .read<HomeCubit>()
+                            .delete(documentID: itemModel.id);
                       },
                       child: EventTile(
                         itemModel: itemModel,
@@ -121,14 +138,24 @@ class EventTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+      padding: const EdgeInsets.symmetric(
+        vertical: 10,
+        horizontal: 20,
+      ),
       child: Container(
-        decoration: const BoxDecoration(color: Colors.black12),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20),
+          color: Colors.black12,
+        ),
         child: Column(
           children: [
             Container(
               height: 170,
               decoration: BoxDecoration(
+                borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(20),
+                  topRight: Radius.circular(20),
+                ),
                 color: Colors.black12,
                 image: DecorationImage(
                   image: NetworkImage(itemModel.imageURL),
@@ -154,7 +181,7 @@ class EventTile extends StatelessWidget {
                         ),
                         const SizedBox(height: 10),
                         Text(
-                          itemModel.releaseDate.toString(),
+                          itemModel.releaseDateFormatted(),
                         ),
                       ],
                     ),
@@ -164,6 +191,9 @@ class EventTile extends StatelessWidget {
                   height: 100,
                   width: 100,
                   decoration: const BoxDecoration(
+                    borderRadius: BorderRadius.only(
+                      bottomRight: Radius.circular(20),
+                    ),
                     color: Colors.white,
                   ),
                   child: Center(
@@ -173,7 +203,9 @@ class EventTile extends StatelessWidget {
                         Text(
                           itemModel.daysLeft(),
                           style: const TextStyle(
-                              color: Colors.black, fontSize: 15),
+                              color: Colors.black,
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold),
                         ),
                         const Text(
                           'days left',

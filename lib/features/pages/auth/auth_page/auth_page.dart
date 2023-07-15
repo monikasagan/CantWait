@@ -5,7 +5,6 @@ import 'package:gansa/features/pages/auth/auth_page/cubit/auth_cubit.dart';
 import 'package:gansa/features/pages/auth/login/login_page.dart';
 import 'package:gansa/features/pages/main/home_page/home_page.dart';
 
-
 class AuthPage extends StatefulWidget {
   @override
   State<AuthPage> createState() => _AuthPageState();
@@ -36,16 +35,6 @@ class _AuthPageState extends State<AuthPage> {
               body: Center(
                 child: CircularProgressIndicator(
                   color: Colors.indigo,
-                  backgroundColor: Color.fromARGB(255, 43, 54, 114),
-                ),
-              ),
-            );
-          }
-          if (state.status == Status.initial) {
-            const Scaffold(
-              body: Center(
-                child: CircularProgressIndicator(
-                  color: Colors.orange,
                   backgroundColor: Color.fromARGB(255, 43, 54, 114),
                 ),
               ),
