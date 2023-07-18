@@ -2,7 +2,6 @@ import 'package:bloc/bloc.dart';
 import 'package:gansa/app/core/enums.dart';
 import 'package:gansa/models/user_model.dart';
 import 'package:gansa/repositories/register_repository.dart';
-import 'package:meta/meta.dart';
 
 part 'register_state.dart';
 
