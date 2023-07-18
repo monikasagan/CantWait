@@ -14,6 +14,7 @@ class ItemsRepository {
         .collection('users')
         .doc(userID)
         .collection('events')
+        .orderBy('release_date')
         .snapshots()
         .map((querySnapshot) {
       return querySnapshot.docs.map(

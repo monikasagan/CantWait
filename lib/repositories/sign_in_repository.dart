@@ -8,7 +8,4 @@ class SignInRepository {
     return await FirebaseAuth.instance
         .signInWithEmailAndPassword(email: email, password: password);
   }
-
-
-  
 }

@@ -64,8 +64,7 @@ class HomePage extends StatelessWidget {
                 ),
               ),
               backgroundColor: Colors.transparent,
-              centerTitle: true,
-              leading: const Icon(Icons.tsunami),
+              // centerTitle: true,
               title: const Text('Can\'t wait '),
               actions: [
                 InkWell(
@@ -112,7 +111,7 @@ class HomePage extends StatelessWidget {
                             .read<HomeCubit>()
                             .delete(documentID: itemModel.id);
                       },
-                      child: EventTile(
+                      child: _EventTile(
                         itemModel: itemModel,
                       ),
                     ),
@@ -127,8 +126,8 @@ class HomePage extends StatelessWidget {
   }
 }
 
-class EventTile extends StatelessWidget {
-  const EventTile({
+class _EventTile extends StatelessWidget {
+  const _EventTile({
     super.key,
     required this.itemModel,
   });
