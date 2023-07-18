@@ -42,8 +42,9 @@ class _RegisterPageState extends State<RegisterPage> {
         },
         builder: (context, state) {
           if (state.status == Status.succes) {
-            return HomePage();
+            return const HomePage();
           }
+
           if (state.status == Status.loading) {
             return const Scaffold(
               body: Center(
@@ -59,89 +60,87 @@ class _RegisterPageState extends State<RegisterPage> {
             resizeToAvoidBottomInset: false,
             body: Center(
               child: SafeArea(
-                child: Expanded(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Icon(
-                        Icons.tsunami,
-                        size: 100,
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      const Text(
-                        'Welcome back you\'ve been missed!',
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      MyTextField(
-                        controller: emailController,
-                        hintText: 'Email',
-                        obscureText: false,
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      MyTextField(
-                        controller: passwordController,
-                        hintText: 'Password',
-                        obscureText: true,
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      MyTextField(
-                        controller: confirmPasswordController,
-                        hintText: 'Confirm your password',
-                        obscureText: true,
-                      ),
-                      const SizedBox(
-                        height: 7,
-                      ),
-                      const SizedBox(
-                        height: 25,
-                      ),
-                      Button(
-                        onTap: () async {
-                          await context.read<RegisterCubit>().register(
-                              email: emailController.text,
-                              password: passwordController.text);
-                        },
-                        buttonTitle: 'Sign Up',
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Text(
-                            'Already have an account?',
-                          ),
-                          const SizedBox(
-                            width: 5,
-                          ),
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.of(context).push(
-                                MaterialPageRoute(
-                                  builder: (_) => const LoginPage(),
-                                ),
-                              );
-                            },
-                            child: const Text(
-                              'Sign In!',
-                              style: TextStyle(
-                                color: Colors.indigo,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Icon(
+                      Icons.tsunami,
+                      size: 100,
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    const Text(
+                      'Welcome back you\'ve been missed!',
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    MyTextField(
+                      controller: emailController,
+                      hintText: 'Email',
+                      obscureText: false,
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    MyTextField(
+                      controller: passwordController,
+                      hintText: 'Password',
+                      obscureText: true,
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    MyTextField(
+                      controller: confirmPasswordController,
+                      hintText: 'Confirm your password',
+                      obscureText: true,
+                    ),
+                    const SizedBox(
+                      height: 7,
+                    ),
+                    const SizedBox(
+                      height: 25,
+                    ),
+                    Button(
+                      onTap: () async {
+                        await context.read<RegisterCubit>().register(
+                            email: emailController.text,
+                            password: passwordController.text);
+                      },
+                      buttonTitle: 'Sign Up',
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Text(
+                          'Already have an account?',
+                        ),
+                        const SizedBox(
+                          width: 5,
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (_) => const LoginPage(),
                               ),
+                            );
+                          },
+                          child: const Text(
+                            'Sign In!',
+                            style: TextStyle(
+                              color: Colors.indigo,
                             ),
                           ),
-                        ],
-                      )
-                    ],
-                  ),
+                        ),
+                      ],
+                    )
+                  ],
                 ),
               ),
             ),

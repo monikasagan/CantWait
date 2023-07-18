@@ -66,26 +66,7 @@ class _LoginPageState extends State<LoginPage> {
                 emailController: emailController,
                 passwordController: passwordController);
           }
-          return  HomePage();
-          // switch (state.status) {
-          //   case Status.loading:
-          //     return const Center(
-          //       child: CircularProgressIndicator(
-          //         backgroundColor: Colors.indigo,
-          //       ),
-          //     );
-
-          //   case Status.error:
-          //     return const CircularProgressIndicator(
-          //       color: Colors.red,
-          //     );
-          //   case Status.initial:
-          //     return _LoginPageView(
-          //         emailController: emailController,
-          //         passwordController: passwordController);
-          //   case Status.succes:
-          //     return HomePage();
-          // }
+          return HomePage();
         },
       ),
     );

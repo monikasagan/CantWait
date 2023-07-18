@@ -5,14 +5,16 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:gansa/app/core/enums.dart';
 import 'package:gansa/models/item_model.dart';
 import 'package:gansa/repositories/items_repository.dart';
+import 'package:gansa/repositories/sign_out_repository.dart';
 
 part 'home_state.dart';
 
 class HomeCubit extends Cubit<HomeState> {
-  HomeCubit(this._itemsRepository) : super(HomeState());
+  HomeCubit(this._itemsRepository, this._signOutRepository)
+      : super(HomeState());
 
   StreamSubscription? _streamSubscription;
-
+  final SignOutRepository _signOutRepository;
   final ItemsRepository _itemsRepository;
 
   Future<void> start() async {
@@ -48,7 +50,7 @@ class HomeCubit extends Cubit<HomeState> {
   }
 
   Future<void> signOut() async {
-    await FirebaseAuth.instance.signOut();
+    await _signOutRepository.signOut();
     emit(
       HomeState(user: null),
     );

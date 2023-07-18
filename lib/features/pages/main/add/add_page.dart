@@ -86,7 +86,6 @@ class _AddPageState extends State<AddPage> {
 
 class _AddPageBody extends StatelessWidget {
   const _AddPageBody({
-    super.key,
     required this.onTitleChanged,
     required this.onImageUrlChanged,
     required this.onDateChanged,

@@ -7,18 +7,18 @@ import 'package:gansa/features/pages/main/add/add_page.dart';
 import 'package:gansa/features/pages/main/home_page/cubit/home_cubit.dart';
 import 'package:gansa/models/item_model.dart';
 import 'package:gansa/repositories/items_repository.dart';
+import 'package:gansa/repositories/sign_out_repository.dart';
 
 class HomePage extends StatelessWidget {
-  HomePage({
+  const HomePage({
     super.key,
   });
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => HomeCubit(
-        ItemsRepository(),
-      )..start(),
+      create: (context) =>
+          HomeCubit(ItemsRepository(), SignOutRepository())..start(),
       child: BlocConsumer<HomeCubit, HomeState>(
         listener: (context, state) {
           if (state.status == Status.error) {
@@ -69,7 +69,7 @@ class HomePage extends StatelessWidget {
               title: const Text('Can\'t wait '),
               actions: [
                 InkWell(
-                  onTap: () {
+                  onTap: () async {
                     context.read<HomeCubit>().signOut();
                   },
                   child: const Icon(Icons.logout_outlined),
