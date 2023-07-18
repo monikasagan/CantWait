@@ -1,7 +1,7 @@
 part of 'login_cubit.dart';
 
 class LoginState {
-  final User? user;
+  final UserModel? user;
   final Status status;
   final String? errorMessage;
 

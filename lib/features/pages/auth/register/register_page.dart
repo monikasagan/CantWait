@@ -4,6 +4,7 @@ import 'package:gansa/components/button.dart';
 import 'package:gansa/components/my_text_field.dart';
 import 'package:gansa/features/pages/auth/auth_page/cubit/auth_cubit.dart';
 import 'package:gansa/features/pages/auth/login/login_page.dart';
+import 'package:gansa/repositories/auth_repository.dart';
 
 class RegisterPage extends StatefulWidget {
   final Function()? onTap;
@@ -24,7 +25,7 @@ class _RegisterPageState extends State<RegisterPage> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => AuthCubit(),
+      create: (context) => AuthCubit(AuthRepository()),
       child: BlocBuilder<AuthCubit, AuthState>(
         builder: (context, state) {
           return Scaffold(

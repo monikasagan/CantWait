@@ -1,14 +1,17 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:gansa/app/core/enums.dart';
+import 'package:gansa/models/user_model.dart';
+import 'package:gansa/repositories/sign_in_repository.dart';
 
 part 'login_state.dart';
 
 class LoginCubit extends Cubit<LoginState> {
-  LoginCubit()
+  LoginCubit(this._signInRepository)
       : super(
           LoginState(),
         );
+
+  final SignInRepository _signInRepository;
 
   Future<void> start() async {
     emit(
@@ -24,10 +27,8 @@ class LoginCubit extends Cubit<LoginState> {
       LoginState(user: null),
     );
     try {
-      await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
+      await _signInRepository.signInWithEmailAndPassword(
+          email: email, password: password);
       LoginState(
         status: Status.succes,
         user: state.user,
@@ -42,8 +43,7 @@ class LoginCubit extends Cubit<LoginState> {
     }
   }
 
-  
-Future<void> signOut() async {
-    await FirebaseAuth.instance.signOut();
+  Future<void> signOut() async {
+    await _signInRepository.signOut();
   }
 }
