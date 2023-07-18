@@ -1,11 +1,11 @@
-part of 'login_cubit.dart';
+part of 'register_cubit.dart';
 
-class LoginState {
-  final UserModel? user;
+class RegisterState {
   final Status status;
+  final UserModel? user;
   final String? errorMessage;
 
-  LoginState({
+  RegisterState({
     this.user,
     this.errorMessage,
     this.status = Status.initial,

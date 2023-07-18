@@ -5,6 +5,7 @@ import 'package:gansa/components/button.dart';
 import 'package:gansa/components/my_text_field.dart';
 import 'package:gansa/features/pages/auth/register/register_page.dart';
 import 'package:gansa/features/pages/main/home_page/home_page.dart';
+import 'package:gansa/repositories/sign_in_repository.dart';
 
 import 'cubit/login_cubit.dart';
 
@@ -25,7 +26,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => LoginCubit()..start(),
+      create: (context) => LoginCubit(SignInRepository())..start(),
       child: BlocConsumer<LoginCubit, LoginState>(
         listener: (context, state) {
           if (state.status == Status.error) {
@@ -65,26 +66,7 @@ class _LoginPageState extends State<LoginPage> {
                 emailController: emailController,
                 passwordController: passwordController);
           }
-          return  HomePage();
-          // switch (state.status) {
-          //   case Status.loading:
-          //     return const Center(
-          //       child: CircularProgressIndicator(
-          //         backgroundColor: Colors.indigo,
-          //       ),
-          //     );
-
-          //   case Status.error:
-          //     return const CircularProgressIndicator(
-          //       color: Colors.red,
-          //     );
-          //   case Status.initial:
-          //     return _LoginPageView(
-          //         emailController: emailController,
-          //         passwordController: passwordController);
-          //   case Status.succes:
-          //     return HomePage();
-          // }
+          return HomePage();
         },
       ),
     );

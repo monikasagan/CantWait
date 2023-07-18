@@ -7,18 +7,18 @@ import 'package:gansa/features/pages/main/add/add_page.dart';
 import 'package:gansa/features/pages/main/home_page/cubit/home_cubit.dart';
 import 'package:gansa/models/item_model.dart';
 import 'package:gansa/repositories/items_repository.dart';
+import 'package:gansa/repositories/sign_out_repository.dart';
 
 class HomePage extends StatelessWidget {
-  HomePage({
+  const HomePage({
     super.key,
   });
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => HomeCubit(
-        ItemsRepository(),
-      )..start(),
+      create: (context) =>
+          HomeCubit(ItemsRepository(), SignOutRepository())..start(),
       child: BlocConsumer<HomeCubit, HomeState>(
         listener: (context, state) {
           if (state.status == Status.error) {
@@ -64,12 +64,11 @@ class HomePage extends StatelessWidget {
                 ),
               ),
               backgroundColor: Colors.transparent,
-              centerTitle: true,
-              leading: const Icon(Icons.tsunami),
+              // centerTitle: true,
               title: const Text('Can\'t wait '),
               actions: [
                 InkWell(
-                  onTap: () {
+                  onTap: () async {
                     context.read<HomeCubit>().signOut();
                   },
                   child: const Icon(Icons.logout_outlined),
@@ -112,7 +111,7 @@ class HomePage extends StatelessWidget {
                             .read<HomeCubit>()
                             .delete(documentID: itemModel.id);
                       },
-                      child: EventTile(
+                      child: _EventTile(
                         itemModel: itemModel,
                       ),
                     ),
@@ -127,8 +126,8 @@ class HomePage extends StatelessWidget {
   }
 }
 
-class EventTile extends StatelessWidget {
-  const EventTile({
+class _EventTile extends StatelessWidget {
+  const _EventTile({
     super.key,
     required this.itemModel,
   });
