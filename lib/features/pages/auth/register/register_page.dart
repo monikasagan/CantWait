@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gansa/app/core/enums.dart';
 import 'package:gansa/components/button.dart';
 import 'package:gansa/components/my_text_field.dart';
-import 'package:gansa/features/pages/auth/auth_page/cubit/auth_cubit.dart';
 import 'package:gansa/features/pages/auth/login/login_page.dart';
-import 'package:gansa/repositories/auth_repository.dart';
+import 'package:gansa/features/pages/auth/register/cubit/register_cubit.dart';
+import 'package:gansa/features/pages/main/home_page/home_page.dart';
+import 'package:gansa/repositories/register_repository.dart';
 
 class RegisterPage extends StatefulWidget {
   final Function()? onTap;
@@ -25,9 +27,34 @@ class _RegisterPageState extends State<RegisterPage> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => AuthCubit(AuthRepository()),
-      child: BlocBuilder<AuthCubit, AuthState>(
+      create: (context) => RegisterCubit(RegisterRepository()),
+      child: BlocConsumer<RegisterCubit, RegisterState>(
+        listener: (context, state) {
+          if (state.status == Status.error) {
+            final errorMessage = state.errorMessage ?? 'Unkown error';
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(errorMessage),
+                backgroundColor: Colors.red,
+              ),
+            );
+          }
+        },
         builder: (context, state) {
+          if (state.status == Status.succes) {
+            return HomePage();
+          }
+          if (state.status == Status.loading) {
+            return const Scaffold(
+              body: Center(
+                child: CircularProgressIndicator(
+                  color: Colors.indigo,
+                  backgroundColor: Color.fromARGB(255, 43, 54, 114),
+                ),
+              ),
+            );
+          }
+
           return Scaffold(
             resizeToAvoidBottomInset: false,
             body: Center(
@@ -77,7 +104,11 @@ class _RegisterPageState extends State<RegisterPage> {
                         height: 25,
                       ),
                       Button(
-                        onTap: () {},
+                        onTap: () async {
+                          await context.read<RegisterCubit>().register(
+                              email: emailController.text,
+                              password: passwordController.text);
+                        },
                         buttonTitle: 'Sign Up',
                       ),
                       const SizedBox(
